@@ -18,6 +18,28 @@
 
     <div id="contenido">
 
+        <div class="Extra">
+
+            <button (click)="FijarPosicion()" >Fijar</button>
+
+            <h4> 
+                Pocision Fija
+                Latitud: {{ PosicionFija['latitud'] }}
+                <br> 
+                Longitud: {{ PosicionFija['longitud'] }} 
+            
+            </h4>
+
+            <h4> 
+                Pocision Actual
+                Latitud: {{ PosicionActual['latitud'] }}
+                <br> 
+                Longitud: {{ PosicionActual['longitud'] }} 
+            
+            </h4>
+
+        </div>
+
         <div class="gps">
 
             <div class="gps-icono {{ lblEstadoGPS }}">
@@ -40,14 +62,17 @@
 
             <div class="alerta-contenido">
 
+                Distancia: {{ Distancia }} KM
+                <br>
+                Estado de la Puerta: {{ Puerta }}
                 <ul>
 
                     <li *ngFor="let log of logs">
-                
-                      {{ log }}
-                
+
+                        {{ log }}
+
                     </li>
-                
+
                 </ul>
 
             </div>

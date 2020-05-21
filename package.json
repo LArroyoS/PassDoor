@@ -29,6 +29,7 @@
     "@ionic/angular": "^5.0.0",
     "cordova-android": "^8.1.0",
     "cordova-browser": "^6.0.0",
+    "cordova-gps-status": "git+https://github.com/dukhanov/cordova-gps-status.git",
     "cordova-plugin-geolocation": "^4.0.2",
     "cordova.plugins.diagnostic": "^5.0.2",
     "firebase": "^7.14.4",
@@ -76,7 +77,8 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-ionic-keyboard": {}
+      "cordova-plugin-ionic-keyboard": {},
+      "cordova-gps-status": {}
     },
     "platforms": [
       "browser",
