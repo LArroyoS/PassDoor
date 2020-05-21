@@ -1,0 +1,8 @@
+{
+  "name": "PassDoor",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

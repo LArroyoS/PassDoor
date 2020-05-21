@@ -1,0 +1,84 @@
+<ion-content [fullscreen]="true">
+
+  <!-- //////////////////////////////////////////////// -->
+  <!-- ENCABEZADO -->
+
+  <div id="encabezado">
+
+    <h3>{{ titulo }}</h3>
+
+    <div class="imagen">
+
+      <img src="assets/imagenes/logo.png" alt="PASSDOOR" width="100%" />
+
+    </div>
+
+  </div>
+
+  <!-- //////////////////////////////////////////////// -->
+  <!-- FORMULARIO -->
+
+  <form id="formulario">
+
+    <div class="grupo">
+
+      <div class="icono">
+
+        <ion-icon name="mail"></ion-icon>
+
+      </div>
+
+      <ion-item class="input">
+
+        <ion-label position="floating">{{ lblCorreo }}</ion-label>
+        <ion-input></ion-input>
+
+      </ion-item>
+
+    </div>
+
+    <div class="grupo">
+
+      <div class="icono">
+
+        <ion-icon name="lock-closed"></ion-icon>
+
+      </div>
+
+      <ion-item class="input">
+
+        <ion-label position="floating">{{ lblCodigoAcceso }}</ion-label>
+        <ion-input></ion-input>
+
+      </ion-item>
+
+    </div>
+
+    <div class="grupo">
+
+      <a class="ref">
+
+        {{ refOlvideCodAcc }}
+
+        <ion-icon name="caret-forward-outline"></ion-icon>
+
+      </a>
+
+    </div>
+
+    <!-- //////////////////////////////////////////////// -->
+    <!-- BOTONES -->
+    <div id="botones">
+
+      <button>
+
+        <a [routerLink]="['/Inicio']">{{ btnIngresar }}</a>
+
+      </button>
+      <button>{{ btnRegistrarse }}</button>
+
+    </div>
+
+  </form>
+
+</ion-content>

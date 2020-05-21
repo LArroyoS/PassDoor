@@ -1,0 +1,147 @@
+/******************************************************/
+/*FONDO DE PAGINA*/
+
+ion-content{
+
+  --ion-background-color: WHITE;
+
+}
+
+a{
+
+  text-decoration: none;
+
+}
+
+/******************************************************/
+/*ENCABEZADO*/
+
+#encabezado h3{
+
+  color: black;
+  text-align: center;
+
+}
+
+.imagen {
+
+  max-width: 350px;
+  margin:auto
+
+}
+
+/******************************************************/
+/*FORMULARIO*/
+
+#formulario{
+
+  max-width: 350px;
+  margin:auto
+
+}
+
+.grupo .icono{
+  
+  color: white;
+  min-width: 50px;
+  text-align: center;
+  background-color: dodgerblue;
+  padding: 5px;
+
+}
+
+.grupo .icono ion-icon{
+
+  font-size: 40px;
+
+}
+
+.grupo{
+
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px;
+  overflow: auto;
+
+}
+
+.grupo .input,.grupo .ref{
+
+  width: 100%;
+  margin: 0;
+  outline:none;
+  overflow: auto;
+
+}
+
+.grupo a.ref{
+
+  background-color: gray;
+  text-align: center;
+  padding: 20px;
+  color: white;
+  text-decoration: none;
+
+}
+
+.grupo .input{
+
+  --background: white;
+  --color: black;
+  border: 1px solid lightgray;
+
+}
+
+/*****************************************************/
+/*BOTONES*/
+
+#botones{
+
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 350px;
+  padding: 0;
+  overflow: auto;
+
+}
+
+#botones button{
+
+  display: inline;
+  background-color: dodgerblue;
+  min-width: 163px;
+  margin: 5px;
+  padding: 15px;
+
+}
+
+#botones button *, #botones button{
+
+  color: white;
+
+}
+
+#botones button:hover {
+  opacity: 0.5;
+}
+
+@media only screen and (max-width: 350px){
+
+  #botones button{
+
+    display: block;
+    min-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  
+  }
+
+  .grupo .icono{
+  
+    display: none;
+  
+  }
+
+}

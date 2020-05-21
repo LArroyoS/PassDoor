@@ -1,0 +1,130 @@
+/******************************************************/
+/*FONDO DE PAGINA*/
+
+ion-content{
+
+    --ion-background-color: WHITE;
+  
+}
+
+/******************************************************/
+/*Encabezado*/
+
+.menu-sup{
+
+    margin: 0;
+    border: 0;
+    background-color: dodgerblue;
+    overflow: hidden;
+    padding: 3px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+
+}
+
+.menu-sup .imagen{
+
+    float: left;
+    width: 45px;
+
+}
+
+.menu-sup .imagen img{
+
+    width: 100%;
+
+}
+
+.menu-sup a.icono {
+    
+    float: right;
+    color: white;
+    font-size: 40px;
+
+}
+
+/******************************************************/
+/*Contenido*/
+
+#contenido{
+
+    max-width: 350px;
+    margin:auto;
+    overflow: auto;
+    padding-top: 60px;
+  
+}
+
+/******************************************************/
+/*Alerta*/
+
+.alerta{
+
+    margin-top: 10px;
+    background-color: limegreen;
+    border-radius: 10px 10px;
+
+}
+
+.alerta *{
+
+    color: white;
+
+}
+
+.alerta .alerta-titulo{
+
+    background-color: forestgreen;
+    text-align: center;
+    padding: 1px;
+
+}
+
+.alerta .alerta-contenido{
+
+    padding: 10px;
+
+}
+
+.alerta .alerta-contenido ul{
+
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+}
+
+/******************************************************/
+/*GPS*/
+
+.gps{
+
+    margin-top: 50px;
+    text-align: center;
+    color: black;
+
+    margin-bottom: 30px;
+
+}
+
+.gps .gps-icono{
+
+    font-size:200px;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+
+}
+
+.gps .ACTIVO{
+
+    color: green !important;
+
+}
+
+.gps .DESACTIVO{
+
+    color: crimson !important;
+
+}
