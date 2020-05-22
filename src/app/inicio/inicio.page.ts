@@ -130,7 +130,7 @@ export class Inicio {
     var va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
     var distancia = radioTierra * va2;
 
-    this.Distancia = distancia.toFixed(4);
+    this.Distancia = parseFloat(distancia.toFixed(4));
 
     if(this.Distancia<2 && this.Distancia>-2){
 
