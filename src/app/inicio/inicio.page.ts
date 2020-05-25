@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { ConexionFirebaseService } from '../services/conexion/conexion-firebase.service';
+import { AutenticacionFirebaseService } from '../services/autenticacion/autenticacion-firebase.service';
+import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-inicio',
@@ -26,7 +30,21 @@ export class Inicio {
   PosicionFija = { 'latitud': 0, 'longitud': 0 };
   PosicionActual = { 'latitud': 1, 'longitud': 1 };
 
-  constructor(private diagnostic: Diagnostic, private geolocation: Geolocation) {
+  coordenada:any = {
+
+    latitud:'',
+    longitud:''
+
+  }
+
+  constructor(
+    private conexion: ConexionFirebaseService,
+    private diagnostic: Diagnostic, 
+    private geolocation: Geolocation,
+    private autenticacion: AutenticacionFirebaseService,
+    private router: Router,
+    private afa: AngularFireAuth
+  ) {
 
     this.lblEstadoGPS = this.EstadoGPS[1];
 
@@ -38,6 +56,15 @@ export class Inicio {
 
       this.PosicionActual['latitud'] = resultado.coords.latitude;
       this.PosicionActual['longitud'] = resultado.coords.longitude;
+
+      this.coordenada = {
+
+        latitud:this.PosicionActual['latitud'],
+        longitud:this.PosicionActual['longitud']
+
+      };
+
+      this.guardar(this.coordenada);
 
       this.distanciaCoord();
 
@@ -51,12 +78,7 @@ export class Inicio {
     }
     catch (error) {
 
-      //var positionError = (resultado as PositionError);
-
-      //this.logs.push('Permiso'+positionError.PERMISSION_DENIED);
-
       this.lblEstadoGPS = this.EstadoGPS[1];
-
 
     }
 
@@ -145,6 +167,19 @@ export class Inicio {
 
   }
 
+  guardar(coordenada){
+
+    this.conexion.modificarCoordenada(1,coordenada);
+
+  }
+
+  CerrarSesion(){
+
+    console.log('Sesion cerrada!');
+    this.afa.signOut();
+    this.router.navigateByUrl('/');
+
+  }
 
   ngOnInit() {
 
@@ -152,6 +187,5 @@ export class Inicio {
     this.Localizacion();
 
   }
-
 
 }
