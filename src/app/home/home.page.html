@@ -18,7 +18,7 @@
   <!-- //////////////////////////////////////////////// -->
   <!-- FORMULARIO -->
 
-  <form id="formulario">
+  <div id="formulario">
 
     <div class="grupo">
 
@@ -31,7 +31,7 @@
       <ion-item class="input">
 
         <ion-label position="floating">{{ lblCorreo }}</ion-label>
-        <ion-input></ion-input>
+        <ion-input type="text" [(ngModel)]='usuario.email'></ion-input>
 
       </ion-item>
 
@@ -48,7 +48,7 @@
       <ion-item class="input">
 
         <ion-label position="floating">{{ lblCodigoAcceso }}</ion-label>
-        <ion-input></ion-input>
+        <ion-input type="text" [(ngModel)]='usuario.clave'></ion-input>
 
       </ion-item>
 
@@ -70,15 +70,11 @@
     <!-- BOTONES -->
     <div id="botones">
 
-      <button>
-
-        <a [routerLink]="['/Inicio']">{{ btnIngresar }}</a>
-
-      </button>
-      <button>{{ btnRegistrarse }}</button>
+      <button (click)='enIngresar()'> {{ btnIngresar }} </button>
+      <button [routerLink]="['/Registro']"> {{ btnRegistrarse }} </button>
 
     </div>
 
-  </form>
+  </div>
 
 </ion-content>

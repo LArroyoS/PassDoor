@@ -4,26 +4,27 @@ import { AutenticacionFirebaseService } from '../services/autenticacion/autentic
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+    
+  selector: 'app-registro',
+  templateUrl: './registro.page.html',
+  styleUrls: ['./registro.page.css'],
+
 })
+  
+export class Registro implements OnInit {
 
-export class HomePage {
+  usuario: Usuario;
 
-  titulo = 'INICIAR SESIÓN';
-  btnIngresar = 'INGRESAR';
+  titulo = 'REGISTRO';
+
+  btnRegresar = 'REGRESAR';
   btnRegistrarse = 'REGISTRARSE';
 
   lblCorreo = 'CORREO';
   lblCodigoAcceso = 'CONTRASEÑA';
-
-  refOlvideCodAcc = 'OLVIDÉ MI CONTRASEÑA';
-
-  usuario: Usuario;
-
+  
   constructor(
-    private autenticacion:AutenticacionFirebaseService,
+    private autenticacion:AutenticacionFirebaseService, 
     private router:Router){
 
       this.usuario = new Usuario();
@@ -36,15 +37,15 @@ export class HomePage {
 
   }
 
-  async enIngresar(){
+  async enRegistro(){
 
     //console.log(this.usuario.email+" "+this.usuario.clave);
-    const usuario = await this.autenticacion.enInicioSesion(this.usuario);
+    const usuario = await this.autenticacion.enRegistro(this.usuario);
 
     if(usuario){
 
-      console.log('Exito al iniciar sesión');
-      this.router.navigateByUrl('/Inicio');
+      console.log('Exito al crear usuario');
+      this.router.navigateByUrl('/');
 
     }
 
