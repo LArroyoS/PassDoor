@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 //Ventanas
 import { Inicio } from './inicio/inicio.page';
 import { Registro } from './registro/registro.page';
+import { RestablecerClave } from './restablecerClave/restablecerClave.page';
 
 //GPS
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -38,7 +39,7 @@ import { UsuarioAutenticadoFirebaseService } from './services/usuarioAutenticado
     AppComponent,
     Inicio,
     Registro,
-
+    RestablecerClave
 
   ],
   entryComponents: [],

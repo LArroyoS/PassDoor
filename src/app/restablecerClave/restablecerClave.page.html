@@ -1,0 +1,53 @@
+<ion-content [fullscreen]="true">
+
+    <!-- //////////////////////////////////////////////// -->
+    <!-- ENCABEZADO -->
+  
+    <div id="encabezado">
+  
+      <h3>{{ titulo }}</h3>
+  
+      <div class="imagen">
+  
+        <img src="assets/imagenes/logo.png" alt="PASSDOOR" width="100%" />
+  
+      </div>
+  
+    </div>
+  
+    <!-- //////////////////////////////////////////////// -->
+    <!-- FORMULARIO -->
+  
+    <div id="formulario">
+  
+      <ion-label> {{ lblInstrucciones }}</ion-label>
+
+      <div class="grupo">
+  
+        <div class="icono">
+  
+          <ion-icon name="mail"></ion-icon>
+  
+        </div>
+  
+        <ion-item class="input">
+  
+          <ion-label position="floating">{{ lblCorreo }}</ion-label>
+          <ion-input type="text" [(ngModel)]='email'></ion-input>
+  
+        </ion-item>
+  
+      </div>
+  
+      <!-- //////////////////////////////////////////////// -->
+      <!-- BOTONES -->
+      <div id="botones">
+  
+        <button (click)='enRestablecer()'>{{ btnEnviar }}</button>
+        <button [routerLink]="['/home']">{{ btnRegresar }}</button>
+
+      </div>
+  
+    </div>
+  
+  </ion-content>

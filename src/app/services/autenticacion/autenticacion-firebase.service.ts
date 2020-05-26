@@ -75,4 +75,19 @@ export class AutenticacionFirebaseService {
 
   }
 
+  //Restablecer Clave
+  async enRestablecerClave(email:string){
+
+    return await this.afa.sendPasswordResetEmail(email).then(()=>{
+
+      console.log('Enviado');
+
+    }).catch(()=>{
+
+      console.log('Error');
+
+    });
+
+  }
+
 }

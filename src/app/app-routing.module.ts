@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 import { Inicio } from './inicio/inicio.page';
 import { Registro } from './registro/registro.page';
+import { RestablecerClave } from './restablecerClave/restablecerClave.page';
 
 import { UsuarioAutenticadoFirebaseService } from './services/usuarioAutenticado/usuario-autenticado-firebase.service';
 
@@ -30,6 +31,12 @@ const routes: Routes = [
 
     path: 'Registro',
     component: Registro
+
+  },
+  {
+
+    path: 'RecuperarClave',
+    component: RestablecerClave
 
   }
 

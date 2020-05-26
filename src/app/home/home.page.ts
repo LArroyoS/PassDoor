@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['home.page.scss'],
 })
 
-export class HomePage {
+export class HomePage implements OnInit {
 
   titulo = 'INICIAR SESIÓN';
   btnIngresar = 'INGRESAR';
