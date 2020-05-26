@@ -176,7 +176,7 @@ export class Inicio {
   }
 
   CerrarSesion(){
-
+    
     this.autenticacion.enCerrarSesion();
     this.router.navigateByUrl('/');
 
