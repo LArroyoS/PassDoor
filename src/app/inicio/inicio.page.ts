@@ -4,7 +4,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ConexionFirebaseService } from '../services/conexion/conexion-firebase.service';
 import { AutenticacionFirebaseService } from '../services/autenticacion/autenticacion-firebase.service';
 import { Router } from '@angular/router';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { Coordenada } from '../Entidades/Objetos/coordenada.class';
 
 @Component({
   selector: 'app-inicio',
@@ -14,28 +14,28 @@ import { AngularFireAuth } from '@angular/fire/auth';
 
 export class Inicio {
 
-  lblNotificaciones = 'NOTIFICACIONES';
+  private lblNotificaciones = 'NOTIFICACIONES';
 
-  EstadoGPS = ['ACTIVO', 'DESACTIVO'] as const;
+  private EstadoGPS = ['ACTIVO', 'DESACTIVO'] as const;
+  private EstadosNotificacion = ['aceptable','advertencia', 'critico'] as const;
 
-  opciones = { maximumAge: 0, timeout: 10000, enableHighAccuracy: true } as const;
+  private opciones = { maximumAge: 0, timeout: 10000, enableHighAccuracy: true } as const;
 
-  lblEstadoGPS: string;
+  private lblEstadoGPS: string;
+  private lblEstadoNotificacion: string;
 
-  logs: String[] = [];
+  private logs: String = '';
 
-  Distancia = 0.0000;
-  Puerta = 'Cerrada';
+  private Distancia = 0.0000;
+  private Puerta = 'Cerrada';
 
   PosicionFija = { 'latitud': 0, 'longitud': 0 };
   PosicionActual = { 'latitud': 1, 'longitud': 1 };
 
-  coordenada:any = {
+  private idUsuario:string;
 
-    latitud:'',
-    longitud:''
+  coordenada:Coordenada;
 
-  }
 
   constructor(
     private conexion: ConexionFirebaseService,
@@ -43,10 +43,14 @@ export class Inicio {
     private geolocation: Geolocation,
     private autenticacion: AutenticacionFirebaseService,
     private router: Router,
-    private afa: AngularFireAuth
   ) {
 
     this.lblEstadoGPS = this.EstadoGPS[1];
+    this.lblEstadoNotificacion = this.EstadosNotificacion[2];
+
+    this.coordenada = new Coordenada();
+
+    this.idUsuario = autenticacion.inicioSesion.uid
 
   }
 
@@ -54,31 +58,32 @@ export class Inicio {
 
     try {
 
+      this.logs = "";
+
       this.PosicionActual['latitud'] = resultado.coords.latitude;
       this.PosicionActual['longitud'] = resultado.coords.longitude;
 
-      this.coordenada = {
+      this.coordenada.latitud = resultado.coords.latitud
+      this.coordenada.longitud = resultado.coords.longitude
 
-        latitud:this.PosicionActual['latitud'],
-        longitud:this.PosicionActual['longitud']
-
-      };
-
-      this.guardar(this.coordenada);
+      this.guardar(this.PosicionActual);
 
       this.distanciaCoord();
 
       if (this.lblEstadoGPS != this.EstadoGPS[0]) {
 
         this.lblEstadoGPS = this.EstadoGPS[0];
+        this.lblEstadoNotificacion = this.EstadosNotificacion[0];
 
       }
-
 
     }
     catch (error) {
 
+      this.Puerta = 'Cerrada';
+      this.lblEstadoNotificacion = this.EstadosNotificacion[2];
       this.lblEstadoGPS = this.EstadoGPS[1];
+      this.logs = error;
 
     }
 
@@ -86,13 +91,16 @@ export class Inicio {
 
   ErrorLocalizacion = (positionError) => {
 
-    this.logs.push('Denegado ' + positionError.PERMISSION_DENIED +
+    this.logs = 'Denegado ' + positionError.PERMISSION_DENIED +
       ' Desabilitado ' + positionError.POSITION_UNAVAILABLE +
-      ' Fuera de tiempo ' + positionError.TIMEOUT);
+      ' Fuera de tiempo ' + positionError.TIMEOUT;
 
     //if(positionError.PERMISSION_DENIED==0){
 
-    this.lblEstadoGPS = this.EstadoGPS[1];
+      this.Puerta = 'Cerrada';
+      this.lblEstadoNotificacion = this.EstadosNotificacion[2];
+      this.lblEstadoGPS = this.EstadoGPS[1];
+      this.logs = positionError;
 
     //}
 
@@ -101,19 +109,19 @@ export class Inicio {
   Localizacion() {
 
     //navigator.geolocation.getCurrentPosition(this.FuncionaGPS,this.ErrorGPS,this.opciones);
-    navigator.geolocation.watchPosition(this.FuncionaLocalizacion, this.ErrorLocalizacion, this.opciones);
+    this.geolocation.watchPosition(this.opciones).subscribe(this.FuncionaLocalizacion, this.ErrorLocalizacion);
 
   }
 
   FuncionaGPS = (habilitado) => {
 
-    this.logs.push("GPS location is " + (habilitado ? "enabled" : "disabled"));
+    this.logs = "GPS location is " + (habilitado ? "enabled" : "disabled");
 
   }
 
   ErrorGPS = (error) => {
 
-    this.logs.push("The following error occurred: ");
+    this.logs = "The following error occurred: ";
 
   }
 
@@ -157,11 +165,13 @@ export class Inicio {
     if(this.Distancia<2 && this.Distancia>-2){
 
       this.Puerta = 'Abierta';
+      this.lblEstadoNotificacion = this.EstadosNotificacion[1];
 
     }
     else if(this.Puerta == 'Abierta'){
 
       this.Puerta = 'Cerrada';
+      this.lblEstadoNotificacion = this.EstadosNotificacion[0];
 
     }
 
@@ -169,14 +179,13 @@ export class Inicio {
 
   guardar(coordenada){
 
-    this.conexion.modificarCoordenada(1,coordenada);
+    this.conexion.modificarCoordenada(this.idUsuario,coordenada);
 
   }
 
   CerrarSesion(){
-
-    console.log('Sesion cerrada!');
-    this.afa.signOut();
+    
+    this.autenticacion.enCerrarSesion();
     this.router.navigateByUrl('/');
 
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../Entidades/usuario.class';
+import { Usuario } from '../Entidades/Objetos/usuario.class';
 import { AutenticacionFirebaseService } from '../services/autenticacion/autenticacion-firebase.service';
 import { Router } from '@angular/router';
 
