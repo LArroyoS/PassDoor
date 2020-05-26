@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ConexionFirebaseService } from '../services/conexion/conexion-firebase.service';
@@ -12,7 +12,7 @@ import { Coordenada } from '../Entidades/Objetos/coordenada.class';
   styleUrls: ['inicio.page.css'],
 })
 
-export class Inicio {
+export class Inicio implements OnInit {
 
   private lblNotificaciones = 'NOTIFICACIONES';
 
