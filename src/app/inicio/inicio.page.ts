@@ -34,9 +34,6 @@ export class Inicio {
 
   private idUsuario:string;
 
-  coordenada:Coordenada;
-
-
   constructor(
     private conexion: ConexionFirebaseService,
     private diagnostic: Diagnostic, 
@@ -47,8 +44,6 @@ export class Inicio {
 
     this.lblEstadoGPS = this.EstadoGPS[1];
     this.lblEstadoNotificacion = this.EstadosNotificacion[2];
-
-    this.coordenada = new Coordenada();
 
     this.idUsuario = autenticacion.inicioSesion.uid
 
@@ -62,9 +57,6 @@ export class Inicio {
 
       this.PosicionActual['latitud'] = resultado.coords.latitude;
       this.PosicionActual['longitud'] = resultado.coords.longitude;
-
-      this.coordenada.latitud = resultado.coords.latitud
-      this.coordenada.longitud = resultado.coords.longitude
 
       this.guardar(this.PosicionActual);
 
