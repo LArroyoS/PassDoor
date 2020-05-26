@@ -36,6 +36,7 @@ export class Inicio {
 
   coordenada:Coordenada;
 
+
   constructor(
     private conexion: ConexionFirebaseService,
     private diagnostic: Diagnostic, 
@@ -183,7 +184,7 @@ export class Inicio {
   }
 
   CerrarSesion(){
-
+    
     this.autenticacion.enCerrarSesion();
     this.router.navigateByUrl('/');
 

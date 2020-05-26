@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 
-//Entidad
 import { Usuario } from '../../Entidades/Objetos/usuario.class';
 
 @Injectable({
@@ -66,7 +65,6 @@ export class AutenticacionFirebaseService {
 
   }
 
-  //CerrarSesion
   async enCerrarSesion(){
 
     console.log('Sesion cerrada!');
