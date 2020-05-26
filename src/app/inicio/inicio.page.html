@@ -52,7 +52,7 @@
 
         </div>
 
-        <div class="alerta">
+        <div class="alerta {{ lblEstadoNotificacion }}">
 
             <div class="alerta-titulo">
 
@@ -65,15 +65,8 @@
                 Distancia: {{ Distancia }} KM
                 <br>
                 Estado de la Puerta: {{ Puerta }}
-                <ul>
-
-                    <li *ngFor="let log of logs">
-
-                        {{ log }}
-
-                    </li>
-
-                </ul>
+                <br>
+                {{ logs }}
 
             </div>
 

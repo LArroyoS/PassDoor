@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 
 //Entidad
-import { Usuario } from '../../Entidades/usuario.class';
+import { Usuario } from '../../Entidades/Objetos/usuario.class';
 
 @Injectable({
 
@@ -16,7 +16,11 @@ export class AutenticacionFirebaseService {
 
   constructor(public afa: AngularFireAuth) { 
 
-    afa.authState.subscribe(usuario => (this.inicioSesion = usuario));
+    afa.authState.subscribe(usuario => {
+      
+      this.inicioSesion = usuario;
+    
+    });
 
   }
 
@@ -59,6 +63,15 @@ export class AutenticacionFirebaseService {
       console.log('Error en registrar usuario ', error);
 
     }
+
+  }
+
+  //CerrarSesion
+  async enCerrarSesion(){
+
+    console.log('Sesion cerrada!');
+    this.inicioSesion = false;
+    this.afa.signOut();
 
   }
 

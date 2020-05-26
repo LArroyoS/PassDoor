@@ -62,7 +62,6 @@ ion-content{
 .alerta{
 
     margin-top: 10px;
-    background-color: limegreen;
     border-radius: 10px 10px;
 
 }
@@ -75,7 +74,6 @@ ion-content{
 
 .alerta .alerta-titulo{
 
-    background-color: forestgreen;
     text-align: center;
     padding: 1px;
 
@@ -92,6 +90,42 @@ ion-content{
     list-style-type: none;
     margin: 0;
     padding: 0;
+
+}
+
+.critico{
+
+    background-color: crimson !important;
+
+}
+
+.critico .alerta-titulo{
+
+    background-color: brown;
+
+}
+
+.advertencia{
+
+    background-color: gold !important;
+
+}
+
+.advertencia .alerta-titulo{
+
+    background-color: goldenrod;
+
+}
+
+.aceptable{
+
+    background-color: limegreen !important;
+
+}
+
+.aceptable .alerta-titulo{
+
+    background-color: forestgreen;
 
 }
 
