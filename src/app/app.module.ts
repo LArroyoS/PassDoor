@@ -31,7 +31,6 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 //Servicios
 import { ConexionFirebaseService } from './services/conexion/conexion-firebase.service';
 import { AutenticacionFirebaseService } from './services/autenticacion/autenticacion-firebase.service';
-import { UsuarioAutenticadoFirebaseService } from './services/usuarioAutenticado/usuario-autenticado-firebase.service';
 
 @NgModule({
   declarations: [
@@ -63,7 +62,6 @@ import { UsuarioAutenticadoFirebaseService } from './services/usuarioAutenticado
     Diagnostic,
     ConexionFirebaseService,
     AutenticacionFirebaseService,
-    UsuarioAutenticadoFirebaseService
 
   ],
   bootstrap: [AppComponent]

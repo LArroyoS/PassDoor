@@ -1,5 +1,8 @@
 <ion-content>
 
+    <!-- //////////////////////////////////////////////// -->
+    <!-- ENCABEZADO -->
+
     <div class="menu-sup">
 
         <a class="imagen">
@@ -8,15 +11,27 @@
     
         </a>
 
-        <a class="icono">
+        <div class="icono">
 
-            <ion-icon name="person-circle"></ion-icon>
+            <ion-icon id="usuario-icono" name="person-circle"></ion-icon>
+            
+            <div class="menu-desplegable">
 
-        </a>
+                <p (click)="CerrarSesion()">CERRAR SESIÓN</p>
+
+            </div>
+
+        </div>
     
     </div>
 
+    <!-- //////////////////////////////////////////////// -->
+    <!-- CONTENIDO -->
+
     <div id="contenido">
+
+        <!-- //////////////////////////////////////////////// -->
+        <!-- POSICIONES -->
 
         <div class="Extra">
 
@@ -40,6 +55,9 @@
 
         </div>
 
+        <!-- //////////////////////////////////////////////// -->
+        <!-- ESTADO GPS -->
+
         <div class="gps">
 
             <div class="gps-icono {{ lblEstadoGPS }}">
@@ -51,6 +69,9 @@
             <h3> {{ lblEstadoGPS }} </h3>
 
         </div>
+
+        <!-- //////////////////////////////////////////////// -->
+        <!-- NOTIFICACIÓN -->
 
         <div class="alerta {{ lblEstadoNotificacion }}">
 

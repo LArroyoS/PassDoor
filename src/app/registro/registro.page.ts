@@ -24,6 +24,8 @@ export class Registro implements OnInit {
 
   lblCorreo = 'CORREO';
   lblCodigoAcceso = 'CONTRASEÑA';
+
+  error = '';
   
   constructor(
     private autenticacion:AutenticacionFirebaseService, 
@@ -41,6 +43,7 @@ export class Registro implements OnInit {
 
   async enRegistro(){
 
+    this.error="";
     //console.log(this.usuario.email+" "+this.usuario.clave);
     const usuario = await this.autenticacion.enRegistro(this.usuario);
 
@@ -48,6 +51,11 @@ export class Registro implements OnInit {
 
       console.log('Exito al crear usuario');
       this.router.navigateByUrl('/');
+
+    }
+    else{
+
+      this.error = 'ERROR AL REGISTRAR EL USUARIO';
 
     }
 

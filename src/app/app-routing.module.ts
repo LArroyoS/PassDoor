@@ -5,38 +5,45 @@ import { Inicio } from './inicio/inicio.page';
 import { Registro } from './registro/registro.page';
 import { RestablecerClave } from './restablecerClave/restablecerClave.page';
 
-import { UsuarioAutenticadoFirebaseService } from './services/usuarioAutenticado/usuario-autenticado-firebase.service';
+//Guardia
+import { AuthGuard } from './guardia/auth.guard';
+import { SinauthGuard } from './guardia/sinauth.guard';
 
 const routes: Routes = [
   
   {
 
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
+    canActivate: [ SinauthGuard ]
+    
   },
   {
+
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
+
   },
   {
 
     path: 'Inicio',
     component: Inicio,
-    canActivate: [ UsuarioAutenticadoFirebaseService ]
+    canActivate: [ AuthGuard ]
 
   },
   {
 
     path: 'Registro',
-    component: Registro
+    component: Registro,
+    canActivate: [ SinauthGuard ]
 
   },
   {
 
     path: 'RecuperarClave',
-    component: RestablecerClave
+    component: RestablecerClave,
+    canActivate: [ SinauthGuard ]
 
   }
 
@@ -48,4 +55,5 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
+
 export class AppRoutingModule { }
