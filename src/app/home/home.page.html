@@ -20,6 +20,8 @@
 
   <div id="formulario">
 
+    <span style="color: red">{{ error }}</span>
+
     <div class="grupo">
 
       <div class="icono">
@@ -31,7 +33,7 @@
       <ion-item class="input">
 
         <ion-label position="floating">{{ lblCorreo }}</ion-label>
-        <ion-input type="text" [(ngModel)]='usuario.email'></ion-input>
+        <ion-input type="email" [(ngModel)]='usuario.email'></ion-input>
 
       </ion-item>
 
@@ -48,7 +50,7 @@
       <ion-item class="input">
 
         <ion-label position="floating">{{ lblCodigoAcceso }}</ion-label>
-        <ion-input type="text" [(ngModel)]='usuario.clave'></ion-input>
+        <ion-input type="password" [(ngModel)]='usuario.clave'></ion-input>
 
       </ion-item>
 

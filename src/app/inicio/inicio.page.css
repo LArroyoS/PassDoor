@@ -15,7 +15,6 @@ ion-content{
     margin: 0;
     border: 0;
     background-color: dodgerblue;
-    overflow: hidden;
     padding: 3px;
     position: fixed;
     top: 0;
@@ -36,13 +35,42 @@ ion-content{
 
 }
 
-.menu-sup a.icono {
+.menu-sup .icono {
     
     float: right;
+
+}
+
+.menu-sup .icono ion-icon{
+
     color: white;
     font-size: 40px;
 
 }
+
+    /******************************************************/
+    /*Desplegable*/
+
+    .menu-sup .icono .menu-desplegable{
+
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        color: black;
+        right: 0;
+        min-width: 160px;
+        padding: 5px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 10;
+
+    }
+
+    .menu-sup .icono:hover .menu-desplegable{
+
+        display: block;
+
+    }
+
 
 /******************************************************/
 /*Contenido*/

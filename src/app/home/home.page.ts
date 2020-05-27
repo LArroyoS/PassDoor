@@ -15,6 +15,8 @@ export class HomePage implements OnInit {
   btnIngresar = 'INGRESAR';
   btnRegistrarse = 'REGISTRARSE';
 
+  error = '';
+
   lblCorreo = 'CORREO';
   lblCodigoAcceso = 'CONTRASEÑA';
 
@@ -38,6 +40,7 @@ export class HomePage implements OnInit {
 
   async enIngresar(){
 
+    this.error='';
     //console.log(this.usuario.email+" "+this.usuario.clave);
     const usuario = await this.autenticacion.enInicioSesion(this.usuario);
 
@@ -45,6 +48,11 @@ export class HomePage implements OnInit {
 
       console.log('Exito al iniciar sesión');
       this.router.navigateByUrl('/Inicio');
+
+    }
+    else{
+
+      this.error = 'USUARIO O CONTRASEÑA INCORECTOS';
 
     }
 

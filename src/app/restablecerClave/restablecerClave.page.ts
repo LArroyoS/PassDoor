@@ -16,6 +16,8 @@ export class RestablecerClave implements OnInit{
   lblCorreo = 'CORREO';
   lblInstrucciones = 'Escribe tu nombre para enviarte las isntrucciones para recuperar tu contraseña'
 
+  error = '';
+
   email:string;
 
   btnRegresar = 'REGRESAR';
@@ -36,7 +38,13 @@ export class RestablecerClave implements OnInit{
 
   async enRestablecer(){
 
-    await this.autenticacion.enRestablecerClave(this.email);
+    this.error="";
+    const exito = await this.autenticacion.enRestablecerClave(this.email);
+    if(!exito){
+
+      this.error = 'El email es incorrecto';
+
+    }
 
   }
 

@@ -175,10 +175,10 @@ export class Inicio implements OnInit {
 
   }
 
-  CerrarSesion(){
+  async CerrarSesion(){
 
-    this.autenticacion.enCerrarSesion();
-    this.router.navigateByUrl('/');
+    await this.autenticacion.enCerrarSesion();
+    this.router.navigate(['/']);
 
   }
 
