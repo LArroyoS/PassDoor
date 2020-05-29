@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { map } from 'rxjs/operators';
 
 import { Usuario } from '../../Entidades/Objetos/usuario.class';
 
@@ -12,16 +11,7 @@ import { Usuario } from '../../Entidades/Objetos/usuario.class';
 
 export class AutenticacionFirebaseService {
 
-  public inicioSesion: any = false;
-
   constructor(public afa: AngularFireAuth) { 
-
-    afa.authState.pipe(map(usuario => {
-      
-      this.inicioSesion = usuario;
-      console.log(usuario);
-    
-    }));
 
   }
 
@@ -70,7 +60,6 @@ export class AutenticacionFirebaseService {
   async enCerrarSesion(){
 
     console.log('Sesion cerrada!');
-    this.inicioSesion = false;
     return this.afa.signOut();
 
   }

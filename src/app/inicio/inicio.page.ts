@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { ConexionFirebaseService } from '../services/conexion/conexion-firebase.service';
 import { AutenticacionFirebaseService } from '../services/autenticacion/autenticacion-firebase.service';
 import { Router } from '@angular/router';
-import { Coordenada } from '../Entidades/Objetos/coordenada.class';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { isNullOrUndefined } from 'util';
 
 @Component({
+
   selector: 'app-inicio',
   templateUrl: 'inicio.page.html',
   styleUrls: ['inicio.page.css'],
+
 })
 
 export class Inicio implements OnInit {
@@ -19,7 +21,7 @@ export class Inicio implements OnInit {
   private EstadoGPS = ['ACTIVO', 'DESACTIVO'] as const;
   private EstadosNotificacion = ['aceptable','advertencia', 'critico'] as const;
 
-  private opciones = { maximumAge: 0, timeout: 10000, enableHighAccuracy: true } as const;
+  private opciones = {maximumAge: 3000, timeout: 5000, enableHighAccuracy: true} as const;
 
   private lblEstadoGPS: string;
   private lblEstadoNotificacion: string;
@@ -32,100 +34,106 @@ export class Inicio implements OnInit {
   PosicionFija = { 'latitud': 0, 'longitud': 0 };
   PosicionActual = { 'latitud': 1, 'longitud': 1 };
 
-  private idUsuario:string;
+  private idUsuario:string = '';
 
   constructor(
     private conexion: ConexionFirebaseService,
-    private diagnostic: Diagnostic, 
     private geolocation: Geolocation,
     private autenticacion: AutenticacionFirebaseService,
     private router: Router,
+    private auth:AngularFireAuth,
   ) {
 
     this.lblEstadoGPS = this.EstadoGPS[1];
     this.lblEstadoNotificacion = this.EstadosNotificacion[2];
 
-    this.idUsuario = autenticacion.inicioSesion.uid
+    this.auth.authState.subscribe((usuario) => {
+      
+      if(isNullOrUndefined(usuario)){
 
-  }
-
-  FuncionaLocalizacion = (resultado) => {
-
-    try {
-
-      this.logs = "";
-
-      this.PosicionActual['latitud'] = resultado.coords.latitude;
-      this.PosicionActual['longitud'] = resultado.coords.longitude;
-
-      this.guardar(this.PosicionActual);
-
-      this.distanciaCoord();
-
-      if (this.lblEstadoGPS != this.EstadoGPS[0]) {
-
-        this.lblEstadoGPS = this.EstadoGPS[0];
-        this.lblEstadoNotificacion = this.EstadosNotificacion[0];
+        this.CerrarSesion();
 
       }
+      else{
 
-    }
-    catch (error) {
+        this.idUsuario = usuario.uid;
+
+      }
+      
+    });
+
+  }
+
+  ErrorLocalizacion(){
 
       this.Puerta = 'Cerrada';
       this.lblEstadoNotificacion = this.EstadosNotificacion[2];
       this.lblEstadoGPS = this.EstadoGPS[1];
-      this.logs = error;
-
-    }
+      this.logs = 'Permiso GPS Denegado';
 
   }
 
-  ErrorLocalizacion = (positionError) => {
+  Localizacion(){
 
-    this.logs = 'Denegado ' + positionError.PERMISSION_DENIED +
-      ' Desabilitado ' + positionError.POSITION_UNAVAILABLE +
-      ' Fuera de tiempo ' + positionError.TIMEOUT;
+    let _me = this;
+    this.geolocation.getCurrentPosition().then((resultado) => {
 
-    //if(positionError.PERMISSION_DENIED==0){
+        _me.logs = "";
+  
+        _me.PosicionActual['latitud'] = resultado.coords.latitude;
+        _me.PosicionActual['longitud'] = resultado.coords.longitude;
+  
+        _me.guardar(_me.PosicionActual);
+  
+        _me.distanciaCoord();
+  
+        if (_me.lblEstadoGPS != _me.EstadoGPS[0]) {
+  
+          _me.lblEstadoGPS = _me.EstadoGPS[0];
+          _me.lblEstadoNotificacion = _me.EstadosNotificacion[0];
+  
+        }
+  
+      }).catch((error) => {
+  
+        _me.Puerta = 'Cerrada';
+        _me.lblEstadoNotificacion = _me.EstadosNotificacion[2];
+        _me.lblEstadoGPS = _me.EstadoGPS[1];
+        _me.logs = 'WP '+error;
+  
+      });
+    
+    this.geolocation.watchPosition(this.opciones).subscribe( (resultado) => {
 
-      this.Puerta = 'Cerrada';
-      this.lblEstadoNotificacion = this.EstadosNotificacion[2];
-      this.lblEstadoGPS = this.EstadoGPS[1];
-      this.logs = positionError;
+      try {
+  
+        _me.logs = "";
+  
+        _me.PosicionActual['latitud'] = resultado.coords.latitude;
+        _me.PosicionActual['longitud'] = resultado.coords.longitude;
+  
+        _me.guardar(_me.PosicionActual);
+  
+        _me.distanciaCoord();
+  
+        if (_me.lblEstadoGPS != _me.EstadoGPS[0]) {
+  
+          _me.lblEstadoGPS = _me.EstadoGPS[0];
+          _me.lblEstadoNotificacion = _me.EstadosNotificacion[0];
+  
+        }
+  
+      }
+      catch (error) {
+  
+        _me.Puerta = 'Cerrada';
+        _me.lblEstadoNotificacion = _me.EstadosNotificacion[2];
+        _me.lblEstadoGPS = _me.EstadoGPS[1];
+        _me.logs = 'WP '+error;
+  
+      }
 
-    //}
-
-  }
-
-  Localizacion() {
-
-    //navigator.geolocation.getCurrentPosition(this.FuncionaGPS,this.ErrorGPS,this.opciones);
-    this.geolocation.watchPosition(this.opciones).subscribe(this.FuncionaLocalizacion, this.ErrorLocalizacion);
-
-  }
-
-  FuncionaGPS = (habilitado) => {
-
-    this.logs = "GPS location is " + (habilitado ? "enabled" : "disabled");
-
-  }
-
-  ErrorGPS = (error) => {
-
-    this.logs = "The following error occurred: ";
-
-  }
-
-  VerificaGPS = () => {
-
-    this.diagnostic.isGpsLocationEnabled().then(this.FuncionaGPS, this.ErrorGPS);
-
-  }
-
-  GPSHabilitado() {
-
-    setTimeout(this.VerificaGPS, 5000);
+    });
 
   }
 
@@ -139,22 +147,20 @@ export class Inicio implements OnInit {
   }
 
   //Calcular distancia
-  distanciaCoord() {
+  distanciaCoord(){
 
-    //double radioTierra = 3958.75;//en millas  
-    var radioTierra: number = 6371;//en kilómetros  
-    var dLat: number = ((this.PosicionActual['latitud'] - this.PosicionFija['latitud']) * Math.PI) / 180;
-    var dLng = ((this.PosicionActual['longitud'] - this.PosicionFija['longitud']) * Math.PI) / 180;
-    var sindLat = Math.sin(dLat / 2);
-    var sindLng = Math.sin(dLng / 2);
-    var va1 = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
-      * Math.cos(this.PosicionFija['latitud'] * Math.PI / 180) * Math.cos(this.PosicionActual['latitud'] * Math.PI / 180);
-    var va2 = 2 * Math.atan2(Math.sqrt(va1), Math.sqrt(1 - va1));
-    var distancia = radioTierra * va2;
+    let lon1 = this.PosicionActual['longitud'];
+    let lon2 = this.PosicionFija['longitud'];
+    let lat1 = this.PosicionActual['latitud'];
+    let lat2 = this.PosicionFija['latitud'];
+    let p = 0.017453292519943295;
+    let c = Math.cos;
+    let a = 0.5 - c((lat1-lat2) * p) / 2 + c(lat2 * p) *c((lat1) * p) * (1 - c(((lon1- lon2) * p))) / 2;
+    let dis = (12742 * Math.asin(Math.sqrt(a)));
 
-    this.Distancia = parseFloat(distancia.toFixed(4));
+    this.Distancia = parseFloat(dis.toFixed(4));
 
-    if(this.Distancia<2 && this.Distancia>-2){
+    if(this.Distancia<0.002){
 
       this.Puerta = 'Abierta';
       this.lblEstadoNotificacion = this.EstadosNotificacion[1];
@@ -171,7 +177,11 @@ export class Inicio implements OnInit {
 
   guardar(coordenada){
 
-    this.conexion.modificarCoordenada(this.idUsuario,coordenada);
+    if(this.idUsuario!=''){
+    
+      this.conexion.modificarCoordenada(this.idUsuario,coordenada);
+    
+    }
 
   }
 
@@ -182,9 +192,9 @@ export class Inicio implements OnInit {
 
   }
 
-  ngOnInit() {
 
-    //this.GPSHabilitado();
+  ngOnInit(){
+
     this.Localizacion();
 
   }
