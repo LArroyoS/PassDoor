@@ -146,6 +146,8 @@ export class Inicio implements OnInit {
 
   }
 
+  rad = function(x) {return x*Math.PI/180;}
+
   //Calcular distancia
   distanciaCoord(){
 
@@ -153,12 +155,15 @@ export class Inicio implements OnInit {
     let lon2 = this.PosicionFija['longitud'];
     let lat1 = this.PosicionActual['latitud'];
     let lat2 = this.PosicionFija['latitud'];
-    let p = 0.017453292519943295;
-    let c = Math.cos;
-    let a = 0.5 - c((lat1-lat2) * p) / 2 + c(lat2 * p) *c((lat1) * p) * (1 - c(((lon1- lon2) * p))) / 2;
-    let dis = (12742 * Math.asin(Math.sqrt(a)));
 
-    this.Distancia = parseFloat(dis.toFixed(4));
+    var R = 6378.137; //Radio de la tierra en km
+    var dLat = this.rad( lat2 - lat1 );
+    var dLong = this.rad( lon2 - lon1 );
+    var a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(this.(lat1)) * Math.cos(rad(lat2)) * Math.sin(dLong/2) * Math.sin(dLong/2);
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c;
+
+    this.Distancia = parseFloat(d.toFixed(4));
 
     if(this.Distancia<0.002){
 
